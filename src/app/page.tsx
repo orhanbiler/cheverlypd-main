@@ -126,7 +126,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
             <p className="text-blue-100">
-              © 2024 Cheverly Police Department. All rights reserved.
+              © 2024 Cheverly Police Department. All rights reserved. | Auto-Deploy Ready!
             </p>
           </div>
         </div>
