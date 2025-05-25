@@ -10,7 +10,6 @@ function usePortalStatus(url: string) {
   useEffect(() => {
     const checkStatus = async () => {
       try {
-        // Use a simple approach - try to fetch the URL
         await fetch(url, { 
           method: 'HEAD', 
           mode: 'no-cors',
@@ -23,8 +22,6 @@ function usePortalStatus(url: string) {
     };
     
     checkStatus();
-    
-    // Check status every 5 minutes
     const interval = setInterval(checkStatus, 5 * 60 * 1000);
     return () => clearInterval(interval);
   }, [url]);
@@ -32,7 +29,7 @@ function usePortalStatus(url: string) {
   return status;
 }
 
-// Loading button component
+// Compact loading button component
 function LoadingButton({ href, children, className, status }: { 
   href: string; 
   children: React.ReactNode; 
@@ -43,7 +40,6 @@ function LoadingButton({ href, children, className, status }: {
   
   const handleClick = () => {
     setIsLoading(true);
-    // Reset loading state after navigation attempt
     setTimeout(() => setIsLoading(false), 3000);
   };
   
@@ -71,69 +67,31 @@ function LoadingButton({ href, children, className, status }: {
   );
 }
 
-// Typewriter component for the hero text
-function TypewriterText() {
+// Simplified typewriter component
+function CompactTypewriter() {
   const [displayedText, setDisplayedText] = useState('');
-  const [currentLineIndex, setCurrentLineIndex] = useState(0);
-  const [currentCharIndex, setCurrentCharIndex] = useState(0);
-  const [showCursor, setShowCursor] = useState(true);
+  const [isComplete, setIsComplete] = useState(false);
   
-  const lines = useMemo(() => ['Cheverly Police', 'Department'], []);
-  const typingSpeed = 100; // milliseconds per character
-  const lineDelay = 500; // delay between lines
-  const cursorBlinkSpeed = 530; // cursor blink interval
-
+  const fullText = 'Cheverly Police Department';
+  
   useEffect(() => {
-    // Cursor blinking effect
-    const cursorInterval = setInterval(() => {
-      setShowCursor(prev => !prev);
-    }, cursorBlinkSpeed);
-
-    return () => clearInterval(cursorInterval);
-  }, []);
-
-  useEffect(() => {
-    if (currentLineIndex < lines.length) {
-      const currentLine = lines[currentLineIndex];
-      
-      if (currentCharIndex < currentLine.length) {
-        const timer = setTimeout(() => {
-          setDisplayedText(prev => prev + currentLine[currentCharIndex]);
-          setCurrentCharIndex(prev => prev + 1);
-        }, typingSpeed);
-
-        return () => clearTimeout(timer);
-      } else {
-        // Line is complete, move to next line after delay
-        if (currentLineIndex < lines.length - 1) {
-          const timer = setTimeout(() => {
-            setDisplayedText(prev => prev + '\n');
-            setCurrentLineIndex(prev => prev + 1);
-            setCurrentCharIndex(0);
-          }, lineDelay);
-
-          return () => clearTimeout(timer);
-        }
-      }
+    if (displayedText.length < fullText.length) {
+      const timer = setTimeout(() => {
+        setDisplayedText(fullText.slice(0, displayedText.length + 1));
+      }, 80);
+      return () => clearTimeout(timer);
+    } else {
+      setIsComplete(true);
     }
-  }, [currentCharIndex, currentLineIndex, lines]);
+  }, [displayedText, fullText]);
 
   return (
-    <div className="relative w-full text-center">
-      {/* Subtle Spotlight effect background */}
-      <div className="absolute inset-0 -top-24 -bottom-24 -left-24 -right-24 bg-gradient-radial from-white/8 via-blue-200/5 via-cyan-300/4 to-transparent blur-3xl opacity-60"></div>
-      <div className="absolute inset-0 -top-16 -bottom-16 -left-16 -right-16 bg-gradient-radial from-cyan-300/10 via-blue-300/6 to-transparent blur-2xl opacity-50"></div>
-      
-      {/* Text content */}
-      <h1 className="relative z-10 text-4xl sm:text-6xl md:text-8xl font-bold text-white mb-8 leading-tight min-h-[120px] sm:min-h-[200px] md:min-h-[300px] text-shadow-light text-center w-full">
-        {displayedText.split('\n').map((line, index) => (
-          <div key={index} className="w-full text-center">
-            {index === 0 ? line : <span className="text-gradient">{line}</span>}
-            {index === displayedText.split('\n').length - 1 && (
-              <span className={`inline-block w-1 h-12 sm:h-16 md:h-24 bg-[var(--color-accent-blue)] ml-1 sm:ml-2 shadow-lg shadow-blue-500/50 ${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity duration-100`}></span>
-            )}
-          </div>
-        ))}
+    <div className="relative">
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2 sm:mb-2 leading-tight text-center sm:text-left">
+        {displayedText}
+        {!isComplete && (
+          <span className="inline-block w-0.5 h-8 sm:h-10 md:h-12 bg-[var(--color-accent-blue)] ml-1 animate-pulse"></span>
+        )}
       </h1>
     </div>
   );
@@ -143,106 +101,139 @@ export default function Home() {
   const fieldTrainingStatus = usePortalStatus('https://fieldtraining.cheverlypd.com');
   
   return (
-    <div className="min-h-screen modern-gradient grid-pattern">
-      {/* Hero Section */}
-      <section className="relative py-20 sm:py-40 px-4 sm:px-6 hero-section">
-        <div className="max-w-4xl mx-auto text-center w-full">
-          {/* Logo */}
-          <div className="mb-8 sm:mb-16 animate-fade-in">
-            <Image 
-              src="/logo.png" 
-              alt="Cheverly Police Department Logo" 
-              width={200}
-              height={200}
-              className="mx-auto h-32 sm:h-40 md:h-52 w-auto opacity-90 hover:opacity-100 transition-opacity duration-300"
-              priority
-            />
+    <div className="min-h-screen modern-gradient">
+      {/* Compact Hero Section */}
+      <section className="relative py-8 sm:py-12 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto">
+          {/* Header with logo and title */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 mb-8">
+            <div className="animate-fade-in">
+              <Image 
+                src="/logo.png" 
+                alt="Cheverly Police Department Logo" 
+                width={120}
+                height={120}
+                className="h-20 sm:h-24 md:h-28 w-auto opacity-90 hover:opacity-100 transition-opacity duration-300"
+                priority
+              />
+            </div>
+            
+            <div className="animate-fade-in-up flex-1 text-center sm:text-left hero-content-container" style={{animationDelay: '0.3s', animationFillMode: 'both'}}>
+              <CompactTypewriter />
+              <p className="text-base sm:text-lg text-[var(--color-text-secondary)] max-w-2xl leading-relaxed">
+                Access your training materials and department policies through our secure portals.
+              </p>
+            </div>
           </div>
-          
-          <div className="animate-fade-in-up w-full" style={{animationDelay: '0.5s', animationFillMode: 'both'}}>
-            <TypewriterText />
-          </div>
-          <p className="text-lg sm:text-xl md:text-2xl text-[var(--color-text-secondary)] mb-8 max-w-3xl mx-auto leading-relaxed animate-fade-in px-4" style={{animationDelay: '3.5s', animationFillMode: 'both'}}>
-            Access your training materials and department policies through our secure portals.
-          </p>
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="py-12 px-6 services-section">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-8">
+      {/* Compact Services Grid */}
+      <section className="py-6 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6">
             
             {/* Field Training Portal */}
-            <div className="glass-card p-10 group animate-fade-in-up" style={{animationDelay: '4s', animationFillMode: 'both'}}>
-              <div className="icon-container bg-[var(--color-accent-blue)] w-20 h-20 mb-8">
-                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
+            <div className="glass-card-compact group animate-fade-in-up" style={{animationDelay: '0.6s', animationFillMode: 'both'}}>
+              <div className="flex items-start gap-4">
+                <div className="icon-container-compact bg-[var(--color-accent-blue)] flex-shrink-0">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-xl font-bold text-white mb-2">Field Training Portal</h3>
+                  <p className="text-sm text-[var(--color-text-secondary)] mb-4 leading-relaxed">
+                    Access training materials, submit reports, and track your progress through our comprehensive field training system.
+                  </p>
+                  <LoadingButton
+                    href="https://fieldtraining.cheverlypd.com"
+                    className="btn-modern-compact btn-primary text-sm px-4 py-2 group/btn"
+                    status={fieldTrainingStatus}
+                  >
+                    Access Portal
+                    <svg className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </LoadingButton>
+                </div>
               </div>
-              <h3 className="text-3xl font-bold text-white mb-6">Field Training Portal</h3>
-              <p className="text-lg text-[var(--color-text-secondary)] mb-8 leading-relaxed">
-                Access training materials, submit reports, and track your progress through our comprehensive field training system.
-              </p>
-              <LoadingButton
-                href="https://fieldtraining.cheverlypd.com"
-                className="btn-modern btn-primary text-lg px-8 py-4 group/btn"
-                status={fieldTrainingStatus}
-              >
-                Access Portal
-                <svg className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </LoadingButton>
             </div>
 
             {/* Policy Documentation */}
-            <div className="glass-card p-10 group animate-fade-in-up relative" style={{animationDelay: '4.5s', animationFillMode: 'both'}}>
-              {/* Development Banner */}
-              <div className="absolute top-4 right-4 bg-orange-500/20 border border-orange-500/40 rounded-full px-3 py-1">
-                <span className="text-orange-300 text-xs font-medium">In Development</span>
+            <div className="glass-card-compact group animate-fade-in-up relative" style={{animationDelay: '0.8s', animationFillMode: 'both'}}>
+              <div className="flex items-start gap-4">
+                <div className="icon-container-compact bg-[var(--color-text-muted)] opacity-60 flex-shrink-0">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-start justify-between gap-2 mb-2">
+                    <h3 className="text-xl font-bold text-white opacity-75 flex-1">Policy Documentation</h3>
+                    {/* Development Banner - moved inside content area */}
+                    <div className="bg-orange-500/20 border border-orange-500/40 rounded-full px-2 py-1 flex-shrink-0">
+                      <span className="text-orange-300 text-xs font-medium">In Development</span>
+                    </div>
+                  </div>
+                  <p className="text-sm text-[var(--color-text-secondary)] mb-4 leading-relaxed opacity-75">
+                    Review department policies, procedures, and operational standards. Stay updated with the latest guidelines.
+                  </p>
+                  <button
+                    disabled
+                    className="btn-modern-compact btn-disabled text-sm px-4 py-2 cursor-not-allowed opacity-50"
+                    aria-label="Policy portal is currently in development"
+                  >
+                    <span className="status-indicator bg-orange-400"></span>
+                    Coming Soon
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </button>
+                </div>
               </div>
-              
-              <div className="icon-container bg-[var(--color-text-muted)] w-20 h-20 mb-8 opacity-60">
-                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-              </div>
-              <h3 className="text-3xl font-bold text-white mb-6 opacity-75">Policy Documentation</h3>
-              <p className="text-lg text-[var(--color-text-secondary)] mb-8 leading-relaxed opacity-75">
-                Review department policies, procedures, and operational standards. Stay updated with the latest guidelines.
-              </p>
-              <button
-                disabled
-                className="btn-modern btn-disabled text-lg px-8 py-4 cursor-not-allowed opacity-50"
-                aria-label="Policy portal is currently in development"
-              >
-                <span className="status-indicator bg-orange-400"></span>
-                Coming Soon
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-[var(--color-border)] mt-32">
-        <div className="max-w-6xl mx-auto px-6 py-12">
-          <div className="flex flex-col items-center text-center space-y-4">
+      {/* Quick Stats Section */}
+      <section className="py-6 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="glass-card-compact animate-fade-in-up" style={{animationDelay: '1s', animationFillMode: 'both'}}>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+              <div className="space-y-2">
+                <div className="text-2xl font-bold text-[var(--color-accent-blue)]">24/7</div>
+                <div className="text-sm text-[var(--color-text-secondary)]">Portal Access</div>
+              </div>
+              <div className="space-y-2">
+                <div className="text-2xl font-bold text-[var(--color-accent-green)]">Secure</div>
+                <div className="text-sm text-[var(--color-text-secondary)]">Data Protection</div>
+              </div>
+              <div className="space-y-2">
+                <div className="text-2xl font-bold text-[var(--color-accent-purple)]">Modern</div>
+                <div className="text-sm text-[var(--color-text-secondary)]">Interface</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Compact Footer */}
+      <footer className="border-t border-[var(--color-border)] mt-12">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center space-x-3">
               <Image 
                 src="/logo.png" 
                 alt="Cheverly Police Department Logo" 
-                width={32}
-                height={32}
-                className="h-8 w-auto opacity-80"
+                width={24}
+                height={24}
+                className="h-6 w-auto opacity-80"
               />
-              <span className="text-white font-medium">Cheverly Police Department</span>
+              <span className="text-white font-medium text-sm">Cheverly Police Department</span>
             </div>
-            <p className="text-[var(--color-text-muted)] text-sm">
+            <p className="text-[var(--color-text-muted)] text-xs">
               © 2024 Cheverly Police Department. All rights reserved.
             </p>
           </div>

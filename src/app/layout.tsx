@@ -32,9 +32,28 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/logo.png',
+    icon: [
+      { url: '/logo.png', sizes: '32x32', type: 'image/png' },
+      { url: '/logo.png', sizes: '16x16', type: 'image/png' },
+    ],
     shortcut: '/logo.png',
-    apple: '/logo.png',
+    apple: [
+      { url: '/logo.png', sizes: '180x180', type: 'image/png' },
+    ],
+    other: [
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '32x32',
+        url: '/logo.png',
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '16x16',
+        url: '/logo.png',
+      },
+    ],
   },
   openGraph: {
     type: 'website',
@@ -72,6 +91,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Favicon Links */}
+        <link rel="icon" type="image/png" sizes="32x32" href="/logo.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/logo.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/logo.png" />
+        <link rel="shortcut icon" href="/logo.png" />
+        
         {/* Performance & Resource Hints */}
         <link rel="preconnect" href="https://fieldtraining.cheverlypd.com" />
         <link rel="preconnect" href="https://policy.cheverlypd.com" />
