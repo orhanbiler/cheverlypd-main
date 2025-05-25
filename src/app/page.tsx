@@ -207,9 +207,7 @@ const cardVariants = {
   }
 };
 
-export default function Home() {
-  const fieldTrainingStatus = usePortalStatus('https://fieldtraining.cheverlypd.com');
-  
+export default function Home() {  
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--color-bg-primary)' }}>
       <motion.div
