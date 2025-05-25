@@ -98,7 +98,7 @@ function ActionButton({
     <Component
       {...(href && { href })}
       className={`
-        relative inline-flex items-center gap-3 px-6 py-4 rounded-lg font-medium text-lg sm:text-xl
+        relative inline-flex items-center gap-3 px-6 py-4 rounded-lg font-medium text-xl sm:text-2xl md:text-lg lg:text-xl
         transition-all duration-200 ease-out min-h-[52px] group
         ${getVariantClasses()}
         ${isLoading ? 'pointer-events-none' : ''}
@@ -109,6 +109,11 @@ function ActionButton({
       aria-label={typeof children === 'string' ? children : undefined}
     >
       {status && <StatusBadge status={status} />}
+      {disabled && (
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      )}
       <span className={isLoading ? 'opacity-70' : ''}>{children}</span>
       {!disabled && (
         <svg 
@@ -150,12 +155,14 @@ function TypingTitle() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold text-white mb-6 leading-tight"
+      className="text-5xl sm:text-6xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight"
+      style={{ color: 'var(--color-text-primary)' }}
     >
       {displayedText}
       {!isComplete && (
         <motion.span 
-          className="inline-block w-1 h-10 sm:h-12 lg:h-16 xl:h-20 2xl:h-24 bg-blue-500 ml-2"
+          className="inline-block w-1 h-12 sm:h-14 md:h-12 lg:h-14 xl:h-18 ml-2"
+          style={{ backgroundColor: 'var(--color-accent-blue)' }}
           animate={{ opacity: [1, 0] }}
           transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
         />
@@ -204,14 +211,14 @@ export default function Home() {
   const fieldTrainingStatus = usePortalStatus('https://fieldtraining.cheverlypd.com');
   
   return (
-    <div className="min-h-screen bg-gray-950">
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--color-bg-primary)' }}>
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
         {/* Hero Section - Mobile First */}
-        <section className="relative px-4 py-12 sm:py-16">
+        <section className="relative px-4 py-0 sm:py-16">
           <div className="max-w-5xl mx-auto">
             {/* Header */}
             <div className="text-center mb-16">
@@ -224,14 +231,15 @@ export default function Home() {
                   alt="Cheverly Police Department Logo" 
                   width={140}
                   height={140}
-                  className="mx-auto h-28 w-28 sm:h-32 sm:w-32 md:h-36 md:w-36 lg:h-40 lg:w-40 opacity-90"
+                  className="mx-auto h-28 w-28 sm:h-32 sm:w-32 md:h-24 md:w-24 lg:h-28 lg:w-28 xl:h-32 xl:w-32 opacity-90 drop-shadow-2xl shadow-blue-500/30 hover:drop-shadow-[0_25px_25px_rgba(59,130,246,0.4)] transition-all duration-300"
                   priority
                 />
               </motion.div>
               <TypingTitle />
               <motion.p 
                 variants={itemVariants}
-                className="text-gray-400 text-xl sm:text-2xl lg:text-3xl xl:text-4xl max-w-4xl mx-auto leading-relaxed"
+                className="text-2xl sm:text-3xl md:text-2xl lg:text-3xl xl:text-4xl max-w-4xl mx-auto leading-relaxed"
+                style={{ color: 'var(--color-text-secondary)' }}
               >
                 Secure access to training resources and department systems
               </motion.p>
@@ -242,78 +250,79 @@ export default function Home() {
         {/* Main Content Grid */}
         <section className="px-4 pb-12">
           <div className="max-w-4xl mx-auto">
-            <div className="grid gap-6 sm:gap-8 md:grid-cols-2">
+            <div className="grid gap-6 sm:gap-8 md:grid-cols-2 md:items-stretch">
               
               {/* Field Training Portal Card */}
               <motion.div 
                 variants={cardVariants}
-                className="group relative"
+                className="glass-card-compact group"
               >
-                <div className="absolute inset-0 bg-blue-600/10 rounded-2xl blur-xl group-hover:bg-blue-600/20 transition-all duration-500" />
-                <div className="relative bg-gray-900 border border-gray-800 rounded-2xl p-8 hover:border-gray-700 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
+                <div className="flex flex-col h-full">
                   <div className="flex items-start gap-6 mb-6">
                     <motion.div 
-                      className="flex-shrink-0 w-16 h-16 bg-blue-600 rounded-xl flex items-center justify-center"
+                      className="flex-shrink-0 w-16 h-16 rounded-xl flex items-center justify-center"
+                      style={{ backgroundColor: 'var(--color-accent-blue)' }}
                       whileHover={{ scale: 1.05 }}
                       transition={{ type: "spring", stiffness: 300 }}
                     >
-                      <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-8 h-8" style={{ color: 'var(--color-text-primary)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                       </svg>
                     </motion.div>
                     <div className="flex-1">
-                      <h3 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-4">Field Training Portal</h3>
-                      <p className="text-gray-400 text-lg sm:text-xl lg:text-2xl leading-relaxed mb-6">
+                      <h3 className="text-3xl sm:text-4xl md:text-3xl lg:text-4xl font-semibold mb-4" style={{ color: 'var(--color-text-primary)' }}>Field Training Portal</h3>
+                      <p className="text-xl sm:text-2xl md:text-lg lg:text-xl leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
                         Access training materials, submit reports, and track progress
                       </p>
                     </div>
                   </div>
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <ActionButton
-                      href="https://fieldtraining.cheverlypd.com"
-                      status={fieldTrainingStatus}
-                      variant="primary"
+                  <div className="mt-auto pt-4">
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                     >
-                      Access Portal
-                    </ActionButton>
-                  </motion.div>
+                      <ActionButton
+                        href="https://fieldtraining.cheverlypd.com"
+                        variant="primary"
+                      >
+                        Access Portal
+                      </ActionButton>
+                    </motion.div>
+                  </div>
                 </div>
               </motion.div>
 
               {/* Policy Documentation Card */}
               <motion.div 
                 variants={cardVariants}
-                className="group relative"
+                className="glass-card-compact group"
               >
-                <div className="absolute inset-0 bg-gray-600/5 rounded-2xl blur-xl transition-all duration-500" />
-                <div className="relative bg-gray-900/60 border border-gray-800 rounded-2xl p-8 opacity-75">
+                <div className="flex flex-col h-full">
                   <div className="flex items-start gap-6 mb-6">
-                    <div className="flex-shrink-0 w-16 h-16 bg-gray-700 rounded-xl flex items-center justify-center">
-                      <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="flex-shrink-0 w-16 h-16 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'var(--color-surface)' }}>
+                      <svg className="w-8 h-8" style={{ color: 'var(--color-text-primary)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
                     </div>
                     <div className="flex-1">
-                      <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
-                        <h3 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-gray-300">Policy Documentation</h3>
-                        <span className="px-3 py-1 text-base bg-amber-500/20 text-amber-400 rounded-full w-fit">
-                          Coming Soon
-                        </span>
+                      <div className="mb-4">
+                        <div className="flex flex-wrap items-center gap-3 mb-2">
+                          <h3 className="text-3xl sm:text-4xl md:text-3xl lg:text-4xl font-semibold" style={{ color: 'var(--color-text-primary)' }}>Policy Documentation</h3>
+                          <span className="inline-block px-3 py-1 text-base md:text-sm lg:text-base rounded-full" style={{ backgroundColor: 'rgba(245, 158, 11, 0.2)', color: '#fbbf24' }}>
+                            Coming Soon
+                          </span>
+                        </div>
                       </div>
-                      <p className="text-gray-500 text-lg sm:text-xl lg:text-2xl leading-relaxed mb-6">
+                      <p className="text-xl sm:text-2xl md:text-lg lg:text-xl leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
                         Department policies, procedures, and operational standards
                       </p>
                     </div>
                   </div>
-                  <ActionButton variant="outline" disabled>
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    In Development
-                  </ActionButton>
+                  <div className="mt-auto pt-4">
+                    <ActionButton variant="outline" disabled>
+                      In Development
+                    </ActionButton>
+                  </div>
                 </div>
               </motion.div>
             </div>
@@ -323,15 +332,15 @@ export default function Home() {
         {/* Features Grid */}
         <motion.section 
           variants={itemVariants}
-          className="px-4 py-12"
+          className="px-4 py-2"
         >
           <div className="max-w-4xl mx-auto">
-            <div className="bg-gray-900/80 border border-gray-800 rounded-2xl p-8">
+            <div className="glass-card-compact">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
                 {[
-                  { icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", color: "emerald", title: "24/7 Access", desc: "Always available when you need it" },
-                  { icon: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z", color: "blue", title: "Secure", desc: "Enterprise-grade security" },
-                  { icon: "M13 10V3L4 14h7v7l9-11h-7z", color: "purple", title: "Fast", desc: "Optimized for performance" }
+                  { icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", bgColor: 'var(--color-accent-green)', textColor: 'var(--color-accent-green)', title: "24/7 Access", desc: "Always available when you need it" },
+                  { icon: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z", bgColor: 'var(--color-accent-blue)', textColor: 'var(--color-accent-blue)', title: "Secure", desc: "Enterprise-grade security" },
+                  { icon: "M13 10V3L4 14h7v7l9-11h-7z", bgColor: 'var(--color-accent-purple)', textColor: 'var(--color-accent-purple)', title: "Fast", desc: "Optimized for performance" }
                 ].map((feature, index) => (
                   <motion.div 
                     key={index}
@@ -339,13 +348,13 @@ export default function Home() {
                     whileHover={{ y: -5 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
-                    <div className={`w-12 h-12 bg-${feature.color}-500 rounded-xl mx-auto flex items-center justify-center mb-4`}>
-                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center mb-4" style={{ backgroundColor: feature.bgColor }}>
+                      <svg className="w-6 h-6" style={{ color: 'var(--color-text-primary)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={feature.icon} />
                       </svg>
                     </div>
-                    <h4 className={`text-${feature.color}-400 font-semibold text-xl sm:text-2xl lg:text-3xl`}>{feature.title}</h4>
-                    <p className="text-gray-500 text-lg sm:text-xl lg:text-2xl">{feature.desc}</p>
+                    <h4 className="font-semibold text-2xl sm:text-3xl md:text-xl lg:text-2xl" style={{ color: feature.textColor }}>{feature.title}</h4>
+                    <p className="text-xl sm:text-2xl md:text-base lg:text-lg" style={{ color: 'var(--color-text-muted)' }}>{feature.desc}</p>
                   </motion.div>
                 ))}
               </div>
@@ -356,7 +365,8 @@ export default function Home() {
         {/* Footer */}
         <motion.footer 
           variants={itemVariants}
-          className="border-t border-gray-800 mt-20"
+          className="mt-20"
+          style={{ borderTop: `1px solid var(--color-border)` }}
         >
           <div className="max-w-4xl mx-auto px-4 py-10">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
@@ -368,9 +378,9 @@ export default function Home() {
                   height={32}
                   className="w-8 h-8 opacity-80"
                 />
-                <span className="text-gray-400 font-medium text-xl sm:text-2xl">Cheverly Police Department</span>
+                <span className="font-medium text-2xl sm:text-3xl md:text-xl lg:text-2xl" style={{ color: 'var(--color-text-secondary)' }}>Cheverly Police Department</span>
               </div>
-              <p className="text-gray-500 text-lg sm:text-xl">
+              <p className="text-xl sm:text-2xl md:text-base lg:text-lg" style={{ color: 'var(--color-text-muted)' }}>
                 © 2024 All rights reserved
               </p>
             </div>

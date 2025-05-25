@@ -14,10 +14,10 @@
   --color-text-muted: #71717a;
   
   /* Brand colors */
-  --color-accent-blue: #3b82f6;
+  --color-accent-blue: #6a92d4;
   --color-accent-green: #10b981;
   --color-accent-red: #ef4444;
-  --color-accent-purple: #8b5cf6;
+  --color-accent-purple: #d2c7ed;
   
   /* Border and dividers */
   --color-border: #27272a;
@@ -234,7 +234,7 @@ body {
 }
 
 .btn-primary:hover {
-  background: #2563eb;
+  background: #8e96a8;
   transform: translateY(-1px);
   box-shadow: var(--shadow-md);
 }
