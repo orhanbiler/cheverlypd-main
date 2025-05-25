@@ -4,31 +4,6 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
-// Portal status checker
-function usePortalStatus(url: string) {
-  const [status, setStatus] = useState<'checking' | 'online' | 'offline'>('checking');
-  
-  useEffect(() => {
-    const checkStatus = async () => {
-      try {
-        await fetch(url, { 
-          method: 'HEAD', 
-          mode: 'no-cors',
-          cache: 'no-cache'
-        });
-        setStatus('online');
-      } catch {
-        setStatus('offline');
-      }
-    };
-    
-    checkStatus();
-    const interval = setInterval(checkStatus, 5 * 60 * 1000);
-    return () => clearInterval(interval);
-  }, [url]);
-  
-  return status;
-}
 
 // Status indicator component
 function StatusBadge({ status }: { status: 'checking' | 'online' | 'offline' }) {
