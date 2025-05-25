@@ -542,6 +542,19 @@ body {
   .glass-card-compact .flex.items-start.justify-between .bg-orange-500\/20 {
     align-self: flex-start !important;
   }
+  
+  /* Increase font size for card content on mobile */
+  .glass-card-compact p,
+  .glass-card-compact button {
+    font-size: 1.1rem !important;
+  }
+  .glass-card-compact h3 {
+    font-size: 1.35rem !important;
+  }
+  /* Increase typewriter font size on mobile */
+  .compact-typewriter {
+    font-size: 2.1rem !important;
+  }
 }
 
 /* Desktop vertical alignment for hero section */
