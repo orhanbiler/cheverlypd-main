@@ -134,14 +134,12 @@ function TypingTitle() {
       style={{ color: 'var(--color-text-primary)' }}
     >
       {displayedText}
-      {!isComplete && (
-        <motion.span 
-          className="inline-block w-1 h-12 sm:h-14 md:h-12 lg:h-14 xl:h-18 ml-2"
-          style={{ backgroundColor: 'var(--color-accent-blue)' }}
-          animate={{ opacity: [1, 0] }}
-          transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
-        />
-      )}
+      <motion.span 
+        className="inline-block w-1 h-12 sm:h-14 md:h-12 lg:h-14 xl:h-18 ml-2"
+        style={{ backgroundColor: 'var(--color-accent-blue)' }}
+        animate={{ opacity: [1, 0] }}
+        transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
+      />
     </motion.h1>
   );
 }
@@ -222,8 +220,8 @@ export default function Home() {
 
         {/* Main Content Grid */}
         <section className="px-4 pb-12">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid gap-6 sm:gap-8 md:grid-cols-2 md:items-stretch">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3 lg:items-stretch">
               
               {/* Field Training Portal Card */}
               <motion.div 
@@ -280,7 +278,7 @@ export default function Home() {
                     <div className="flex-1">
                       <div className="mb-4">
                         <div className="flex flex-wrap items-center gap-3 mb-2">
-                          <h3 className="text-3xl sm:text-4xl md:text-3xl lg:text-4xl font-semibold" style={{ color: 'var(--color-text-primary)' }}>Policy Documentation</h3>
+                          <h3 className="text-3xl sm:text-4xl md:text-3xl lg:text-4xl font-semibold" style={{ color: 'var(--color-text-primary)' }}>General Orders</h3>
                           <span className="inline-block px-3 py-1 text-base md:text-sm lg:text-base rounded-full" style={{ backgroundColor: 'rgba(245, 158, 11, 0.2)', color: '#fbbf24' }}>
                             Coming Soon
                           </span>
@@ -288,6 +286,40 @@ export default function Home() {
                       </div>
                       <p className="text-xl sm:text-2xl md:text-lg lg:text-xl leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
                         Department policies, procedures, and operational standards
+                      </p>
+                    </div>
+                  </div>
+                  <div className="mt-auto pt-4">
+                    <ActionButton variant="outline" disabled>
+                      In Development
+                    </ActionButton>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Guides & Tutorials Card */}
+              <motion.div 
+                variants={cardVariants}
+                className="glass-card-compact group"
+              >
+                <div className="flex flex-col h-full">
+                  <div className="flex items-start gap-6 mb-6">
+                    <div className="flex-shrink-0 w-16 h-16 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'var(--color-surface)' }}>
+                      <svg className="w-8 h-8" style={{ color: 'var(--color-text-primary)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                      </svg>
+                    </div>
+                    <div className="flex-1">
+                      <div className="mb-4">
+                        <div className="flex flex-wrap items-center gap-3 mb-2">
+                          <h3 className="text-3xl sm:text-4xl md:text-3xl lg:text-4xl font-semibold" style={{ color: 'var(--color-text-primary)' }}>Guides & Tutorials</h3>
+                          <span className="inline-block px-3 py-1 text-base md:text-sm lg:text-base rounded-full" style={{ backgroundColor: 'rgba(245, 158, 11, 0.2)', color: '#fbbf24' }}>
+                            Coming Soon
+                          </span>
+                        </div>
+                      </div>
+                      <p className="text-xl sm:text-2xl md:text-lg lg:text-xl leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
+                        Training materials, how-to guides, and instructional resources
                       </p>
                     </div>
                   </div>
