@@ -275,7 +275,7 @@ export default function Home() {
               {/* Field Training Portal Card */}
               <motion.div 
                 variants={cardVariants}
-                className="glass-card-compact group hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300"
+                className="glass-card-compact group hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300 relative"
                 whileHover={!isMobile ? { 
                   scale: 1.02,
                   rotateX: -5,
@@ -304,17 +304,37 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="mt-auto pt-4">
-                    <motion.div
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <ActionButton
-                        href="https://fieldtraining.cheverlypd.com"
-                        variant="primary"
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
+                      <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="flex-1"
                       >
-                        Access Portal
-                      </ActionButton>
-                    </motion.div>
+                        <ActionButton
+                          href="https://fieldtraining.cheverlypd.com"
+                          variant="primary"
+                        >
+                          Access Portal
+                        </ActionButton>
+                      </motion.div>
+                      
+                      {/* Updated Banner */}
+                      <motion.div 
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.8, duration: 0.5, type: "spring", stiffness: 300 }}
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        <div className="bg-gradient-to-r from-emerald-500 to-green-500 text-white px-2 py-1 rounded-md shadow-md border border-emerald-400/50 backdrop-blur-sm">
+                          <div className="flex items-center gap-1">
+                            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span className="text-[12px] font-bold tracking-wide">5/28</span>
+                          </div>
+                        </div>
+                      </motion.div>
+                    </div>
                   </div>
                 </div>
               </motion.div>
