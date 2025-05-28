@@ -4,6 +4,24 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
+// Custom hook for mobile detection
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
+
+  return isMobile;
+}
+
 
 // Status indicator component
 function StatusBadge({ status }: { status: 'checking' | 'online' | 'offline' }) {
@@ -110,7 +128,7 @@ function ActionButton({
 // Typing animation component
 function TypingTitle() {
   const [displayedText, setDisplayedText] = useState('');
-  const [setIsComplete] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
   
   const fullText = 'Cheverly Police Department';
   
@@ -181,9 +199,31 @@ const cardVariants = {
 };
 
 export default function Home() {  
+  const isMobile = useIsMobile();
+  
   return (
-    <div className="min-h-screen" style={{ backgroundColor: 'var(--color-bg-primary)' }}>
+    <div className="min-h-screen relative overflow-hidden" style={{ backgroundColor: 'var(--color-bg-primary)' }}>
+      {/* Animated Background Gradient */}
+      <div className="absolute inset-0 opacity-30">
+        {/* Mobile-optimized blob sizes */}
+        <div className="absolute top-0 -left-1/4 w-48 h-48 sm:w-72 md:w-96 sm:h-72 md:h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-2xl sm:blur-3xl animate-blob"></div>
+        <div className="absolute top-0 -right-1/4 w-48 h-48 sm:w-72 md:w-96 sm:h-72 md:h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-2xl sm:blur-3xl animate-blob animation-delay-2000"></div>
+        <div className="absolute -bottom-1/4 left-1/3 w-48 h-48 sm:w-72 md:w-96 sm:h-72 md:h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-2xl sm:blur-3xl animate-blob animation-delay-4000"></div>
+      </div>
+      
+      {/* Mesh Gradient Overlay - Hidden on mobile for performance */}
+      <div className="absolute inset-0 opacity-0 sm:opacity-20 transition-opacity duration-500"
+        style={{
+          backgroundImage: `radial-gradient(at 40% 20%, hsla(215, 88%, 64%, 0.3) 0px, transparent 50%),
+                           radial-gradient(at 80% 0%, hsla(251, 84%, 70%, 0.2) 0px, transparent 50%),
+                           radial-gradient(at 0% 50%, hsla(215, 88%, 64%, 0.2) 0px, transparent 50%),
+                           radial-gradient(at 80% 50%, hsla(251, 84%, 70%, 0.2) 0px, transparent 50%),
+                           radial-gradient(at 0% 100%, hsla(215, 88%, 64%, 0.2) 0px, transparent 50%)`,
+        }}
+      />
+      
       <motion.div
+        className="relative z-10"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -197,14 +237,26 @@ export default function Home() {
                 variants={itemVariants}
                 className="mb-8"
               >
-                <Image 
-                  src="/logo.png" 
-                  alt="Cheverly Police Department Logo" 
-                  width={140}
-                  height={140}
-                  className="mx-auto h-28 w-28 sm:h-32 sm:w-32 md:h-24 md:w-24 lg:h-28 lg:w-28 xl:h-32 xl:w-32 opacity-90 drop-shadow-2xl shadow-blue-500/30 hover:drop-shadow-[0_25px_25px_rgba(59,130,246,0.4)] transition-all duration-300"
-                  priority
-                />
+                <motion.div
+                  animate={{ 
+                    y: [0, -10, 0],
+                  }}
+                  transition={{ 
+                    duration: 4, 
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="motion-reduce:animate-none"
+                >
+                  <Image 
+                    src="/logo.png" 
+                    alt="Cheverly Police Department Logo" 
+                    width={140}
+                    height={140}
+                    className="mx-auto h-28 w-28 sm:h-32 sm:w-32 md:h-24 md:w-24 lg:h-28 lg:w-28 xl:h-32 xl:w-32 opacity-90 drop-shadow-2xl shadow-blue-500/30 hover:drop-shadow-[0_25px_25px_rgba(59,130,246,0.4)] transition-all duration-300"
+                    priority
+                  />
+                </motion.div>
               </motion.div>
               <TypingTitle />
               <motion.p 
@@ -226,14 +278,21 @@ export default function Home() {
               {/* Field Training Portal Card */}
               <motion.div 
                 variants={cardVariants}
-                className="glass-card-compact group"
+                className="glass-card-compact group hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300"
+                whileHover={!isMobile ? { 
+                  scale: 1.02,
+                  rotateX: -5,
+                  rotateY: 5,
+                } : { scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
+                style={{ transformStyle: 'preserve-3d' }}
               >
                 <div className="flex flex-col h-full">
                   <div className="flex items-start gap-6 mb-6">
                     <motion.div 
                       className="flex-shrink-0 w-16 h-16 rounded-xl flex items-center justify-center"
                       style={{ backgroundColor: 'var(--color-accent-blue)' }}
-                      whileHover={{ scale: 1.05 }}
+                      whileHover={!isMobile ? { scale: 1.05 } : {}}
                       transition={{ type: "spring", stiffness: 300 }}
                     >
                       <svg className="w-8 h-8" style={{ color: 'var(--color-text-primary)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -263,10 +322,17 @@ export default function Home() {
                 </div>
               </motion.div>
 
-              {/* Policy Documentation Card */}
+              {/* General Orders Card */}
               <motion.div 
                 variants={cardVariants}
-                className="glass-card-compact group"
+                className="glass-card-compact group hover:shadow-2xl hover:shadow-amber-500/10 transition-all duration-300"
+                whileHover={!isMobile ? { 
+                  scale: 1.02,
+                  rotateX: -5,
+                  rotateY: -5,
+                } : { scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
+                style={{ transformStyle: 'preserve-3d' }}
               >
                 <div className="flex flex-col h-full">
                   <div className="flex items-start gap-6 mb-6">
@@ -300,7 +366,14 @@ export default function Home() {
               {/* Guides & Tutorials Card */}
               <motion.div 
                 variants={cardVariants}
-                className="glass-card-compact group"
+                className="glass-card-compact group hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-300"
+                whileHover={!isMobile ? { 
+                  scale: 1.02,
+                  rotateX: -5,
+                  rotateY: 5,
+                } : { scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
+                style={{ transformStyle: 'preserve-3d' }}
               >
                 <div className="flex flex-col h-full">
                   <div className="flex items-start gap-6 mb-6">
