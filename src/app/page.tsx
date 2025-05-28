@@ -110,7 +110,7 @@ function ActionButton({
 // Typing animation component
 function TypingTitle() {
   const [displayedText, setDisplayedText] = useState('');
-  const [isComplete, setIsComplete] = useState(false);
+  const [setIsComplete] = useState(false);
   
   const fullText = 'Cheverly Police Department';
   
