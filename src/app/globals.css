@@ -578,6 +578,74 @@ body {
   }
 }
 
+/* Police light bar animations */
+@keyframes police-light-left {
+  0%, 48% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  50%, 98% {
+    opacity: 1;
+    transform: translateX(200%);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes police-light-right {
+  0%, 48% {
+    opacity: 1;
+    transform: translateX(-200%);
+  }
+  50%, 98% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-200%);
+  }
+}
+
+/* Police light flicker animations */
+@keyframes police-flicker-blue {
+  0%, 10% { opacity: 0.8; }
+  15%, 25% { opacity: 0; }
+  30%, 40% { opacity: 0.8; }
+  45%, 55% { opacity: 0; }
+  60%, 70% { opacity: 0.8; }
+  75%, 85% { opacity: 0; }
+  90%, 100% { opacity: 0.8; }
+}
+
+@keyframes police-flicker-red {
+  0%, 10% { opacity: 0; }
+  15%, 25% { opacity: 0.8; }
+  30%, 40% { opacity: 0; }
+  45%, 55% { opacity: 0.8; }
+  60%, 70% { opacity: 0; }
+  75%, 85% { opacity: 0.8; }
+  90%, 100% { opacity: 0; }
+}
+
+.animate-police-light-left {
+  animation: police-light-left 2s ease-in-out infinite;
+}
+
+.animate-police-light-right {
+  animation: police-light-right 2s ease-in-out infinite;
+}
+
+.animate-police-flicker-blue {
+  animation: police-flicker-blue 3s ease-in-out infinite;
+}
+
+.animate-police-flicker-red {
+  animation: police-flicker-red 3s ease-in-out infinite;
+}
+
 /* Blob animation */
 @keyframes blob {
   0% {
@@ -624,8 +692,16 @@ body {
   animation-delay: 2s;
 }
 
+.animation-delay-3000 {
+  animation-delay: 3s;
+}
+
 .animation-delay-4000 {
   animation-delay: 4s;
+}
+
+.animation-delay-5000 {
+  animation-delay: 5s;
 }
 
 /* Disable animations on mobile for better performance */
