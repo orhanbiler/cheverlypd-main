@@ -281,6 +281,13 @@ export default function HomeClient() {
                 whileTap={{ scale: 0.98 }}
                 style={{ transformStyle: 'preserve-3d' }}
               >
+                {/* Tooltip on hover */}
+                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
+                  <div className="bg-gray-900 text-white text-xs px-3 py-2 rounded-md whitespace-nowrap">
+                    Last updated June 7th
+                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 -translate-y-1 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+                  </div>
+                </div>
                 <div className="flex flex-col h-full">
                   <div className="flex items-start gap-6 mb-6">
                     <motion.div 
@@ -301,48 +308,17 @@ export default function HomeClient() {
                     </div>
                   </div>
                   <div className="mt-auto pt-4">
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
-                      <motion.div
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="flex-1"
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <ActionButton
+                        href="https://fieldtraining.cheverlypd.com"
+                        variant="primary"
                       >
-                        <ActionButton
-                          href="https://fieldtraining.cheverlypd.com"
-                          variant="primary"
-                        >
-                          Access Portal
-                        </ActionButton>
-                      </motion.div>
-                      
-                      {/* Last Updated Indicator */}
-                      <motion.div 
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.8, duration: 0.5, type: "spring", stiffness: 300 }}
-                        whileHover={{ scale: 1.05 }}
-                        className="relative group"
-                      >
-                        <div className="bg-gradient-to-r from-emerald-600 to-green-600 text-white px-3 py-2 rounded-lg shadow-lg border border-emerald-400/30 backdrop-blur-sm">
-                          <div className="flex items-center gap-2">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <div className="flex flex-col items-start">
-                              <span className="text-[10px] font-medium opacity-90">Updated</span>
-                              <span className="text-sm font-bold">5/28</span>
-                            </div>
-                          </div>
-                        </div>
-                        {/* Tooltip on hover */}
-                        <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                          <div className="bg-gray-900 text-white text-xs px-3 py-2 rounded-md whitespace-nowrap">
-                            Last updated May 28th
-                            <div className="absolute top-full left-1/2 transform -translate-x-1/2 -translate-y-1 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
-                          </div>
-                        </div>
-                      </motion.div>
-                    </div>
+                        Access Portal
+                      </ActionButton>
+                    </motion.div>
                   </div>
                 </div>
               </motion.div>
