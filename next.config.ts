@@ -1,10 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'export',
+  // output: 'export', // Commented out to allow 'npm start'
   trailingSlash: true,
   images: {
-    unoptimized: true,
+    // unoptimized: true, // Only needed for static export
   },
 };
 
