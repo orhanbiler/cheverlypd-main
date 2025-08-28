@@ -1,10 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // output: 'export', // Commented out to allow 'npm start'
+  output: 'export', // Enable static export for Firebase hosting
   trailingSlash: true,
   images: {
-    // unoptimized: true, // Only needed for static export
+    unoptimized: true, // Required for static export
   },
 };
 
