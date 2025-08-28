@@ -301,7 +301,14 @@ export default function HomeClient() {
                       </svg>
                     </motion.div>
                     <div className="flex-1">
-                      <h3 className="text-3xl sm:text-4xl md:text-3xl lg:text-4xl font-semibold mb-4" style={{ color: 'var(--color-text-primary)' }}>Field Training Portal</h3>
+                      <div className="mb-4">
+                        <div className="flex flex-wrap items-center gap-3 mb-2">
+                          <h3 className="text-3xl sm:text-4xl md:text-3xl lg:text-4xl font-semibold" style={{ color: 'var(--color-text-primary)' }}>Field Training Portal</h3>
+                          <span className="inline-block px-3 py-1 text-base md:text-sm lg:text-base rounded-full" style={{ backgroundColor: 'rgba(34, 197, 94, 0.2)', color: '#22c55e' }}>
+                            Live
+                          </span>
+                        </div>
+                      </div>
                       <p className="text-xl sm:text-2xl md:text-lg lg:text-xl leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
                         Access training materials, submit reports, and track progress
                       </p>
@@ -441,8 +448,8 @@ export default function HomeClient() {
                       <div className="mb-4">
                         <div className="flex flex-wrap items-center gap-3 mb-2">
                           <h3 className="text-3xl sm:text-4xl md:text-3xl lg:text-4xl font-semibold" style={{ color: 'var(--color-text-primary)' }}>Crime Map</h3>
-                          <span className="inline-block px-3 py-1 text-base md:text-sm lg:text-base rounded-full" style={{ backgroundColor: 'rgba(239, 68, 68, 0.2)', color: '#ef4444' }}>
-                            Secure
+                          <span className="inline-block px-3 py-1 text-base md:text-sm lg:text-base rounded-full" style={{ backgroundColor: 'rgba(34, 197, 94, 0.2)', color: '#22c55e' }}>
+                            Live
                           </span>
                         </div>
                       </div>
@@ -552,7 +559,7 @@ export default function HomeClient() {
                 <span className="font-medium text-2xl sm:text-3xl md:text-xl lg:text-2xl" style={{ color: 'var(--color-text-secondary)' }}>Cheverly Police Department</span>
               </div>
               <p className="text-xl sm:text-2xl md:text-base lg:text-lg" style={{ color: 'var(--color-text-muted)' }}>
-                © 2024 All rights reserved
+                © 2025 All rights reserved
               </p>
             </div>
           </div>
