@@ -535,6 +535,67 @@ export default function HomeClient() {
                   </div>
                 </div>
               </motion.div>
+
+              {/* IT Management Card */}
+              <motion.div 
+                variants={cardVariants}
+                className="glass-card-compact group hover:shadow-2xl hover:shadow-cyan-500/10 transition-all duration-300 relative"
+                whileHover={!isMobile ? { 
+                  scale: 1.02,
+                  rotateX: -5,
+                  rotateY: -5,
+                } : { scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
+                style={{ transformStyle: 'preserve-3d' }}
+              >
+                {/* Tooltip on hover */}
+                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
+                  <div className="bg-gray-900 text-white text-xs px-3 py-2 rounded-md whitespace-nowrap">
+                    IT Asset Management System
+                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 -translate-y-1 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+                  </div>
+                </div>
+                <div className="flex flex-col h-full">
+                  <div className="flex items-start gap-6 mb-6">
+                    <motion.div 
+                      className="flex-shrink-0 w-16 h-16 rounded-xl flex items-center justify-center"
+                      style={{ backgroundColor: 'rgba(6, 182, 212, 0.2)' }}
+                      whileHover={!isMobile ? { scale: 1.05 } : {}}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      <svg className="w-8 h-8" style={{ color: '#06b6d4' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </motion.div>
+                    <div className="flex-1">
+                      <div className="mb-4">
+                        <div className="flex flex-wrap items-center gap-3 mb-2">
+                          <h3 className="text-3xl sm:text-4xl md:text-3xl lg:text-4xl font-semibold" style={{ color: 'var(--color-text-primary)' }}>IT Management</h3>
+                          <span className="inline-block px-3 py-1 text-base md:text-sm lg:text-base rounded-full" style={{ backgroundColor: 'rgba(34, 197, 94, 0.2)', color: '#22c55e' }}>
+                            Live
+                          </span>
+                        </div>
+                      </div>
+                      <p className="text-xl sm:text-2xl md:text-lg lg:text-xl leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
+                        Manage IT assets including ORI, PID, serial numbers, and department equipment
+                      </p>
+                    </div>
+                  </div>
+                  <div className="mt-auto pt-4">
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <ActionButton
+                        href="https://management-murex.vercel.app"
+                        variant="primary"
+                      >
+                        Access IT Portal
+                      </ActionButton>
+                    </motion.div>
+                  </div>
+                </div>
+              </motion.div>
             </div>
           </div>
         </section>
